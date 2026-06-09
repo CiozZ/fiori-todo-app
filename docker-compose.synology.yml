@@ -1,0 +1,17 @@
+services:
+  app:
+    image: fiori-todo-app:latest
+    ports:
+      - "8080:80"
+    depends_on:
+      - api
+    restart: unless-stopped
+
+  api:
+    image: fiori-todo-api:latest
+    volumes:
+      - todo-data:/data
+    restart: unless-stopped
+
+volumes:
+  todo-data:

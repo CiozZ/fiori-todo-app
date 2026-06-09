@@ -1,6 +1,7 @@
 node_modules/
 dist/
 .ui5/
+*.tar.gz
 
 node_modules/
 dist/
