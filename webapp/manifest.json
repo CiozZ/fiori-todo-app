@@ -1,53 +1,93 @@
 {
-  "_version": "1.58.0",
-  "sap.app": {
-    "id": "todo",
-    "type": "application",
-    "title": "My To-Do App",
-    "applicationVersion": { "version": "1.0.0" }
-  },
-  "sap.ui": {
-    "technology": "UI5",
-    "deviceTypes": { "desktop": true, "tablet": true, "phone": true }
-  },
-  "sap.ui5": {
-    "rootView": {
-      "viewName": "todo.view.App",
-      "type": "XML",
-      "async": true,
-      "id": "app"
+    "_version": "1.58.0",
+    "sap.app": {
+        "id": "todo",
+        "type": "application",
+        "title": "My To-Do App",
+        "applicationVersion": {
+            "version": "1.0.0"
+        },
+        "sourceTemplate": {
+            "id": "@sap/ux-app-migrator:freestyle",
+            "version": "1.25.0",
+            "toolsId": "4b218974-8b7e-46d8-99c8-ab3dc8a88034"
+        }
     },
-    "dependencies": {
-      "minUI5Version": "1.120.0",
-      "libs": { "sap.m": {}, "sap.ui.core": {} }
+    "sap.ui": {
+        "technology": "UI5",
+        "deviceTypes": {
+            "desktop": true,
+            "tablet": true,
+            "phone": true
+        }
     },
-    "models": {
-      "i18n": {
-        "type": "sap.ui.model.resource.ResourceModel",
-        "settings": { "bundleName": "todo.i18n.i18n" }
-      }
-    },
-    "resources": {
-      "css": [{ "uri": "css/style.css" }]
-    },
-    "routing": {
-      "config": {
-        "routerClass": "sap.m.routing.Router",
-        "type": "View",
-        "viewType": "XML",
-        "path": "todo.view",
-        "controlId": "app",
-        "controlAggregation": "pages",
-        "async": true
-      },
-      "routes": [
-        { "name": "main",   "pattern": "",             "target": ["main"] },
-        { "name": "detail", "pattern": "detail/{id}",  "target": ["detail"] }
-      ],
-      "targets": {
-        "main":   { "id": "main",   "name": "Main" },
-        "detail": { "id": "detail", "name": "Detail" }
-      }
+    "sap.ui5": {
+        "rootView": {
+            "viewName": "todo.view.App",
+            "type": "XML",
+            "async": true,
+            "id": "app"
+        },
+        "dependencies": {
+            "minUI5Version": "1.120.0",
+            "libs": {
+                "sap.m": {},
+                "sap.ui.core": {}
+            }
+        },
+        "models": {
+            "i18n": {
+                "type": "sap.ui.model.resource.ResourceModel",
+                "settings": {
+                    "bundleName": "todo.i18n.i18n",
+                    "supportedLocales": [""],
+                    "fallbackLocale": ""
+                }
+            }
+        },
+        "resources": {
+            "css": [
+                {
+                    "uri": "css/style.css"
+                }
+            ]
+        },
+        "routing": {
+            "config": {
+                "routerClass": "sap.m.routing.Router",
+                "type": "View",
+                "viewType": "XML",
+                "path": "todo.view",
+                "controlId": "app",
+                "controlAggregation": "pages",
+                "async": true
+            },
+            "routes": [
+                {
+                    "name": "main",
+                    "pattern": "",
+                    "target": [
+                        "main"
+                    ]
+                },
+                {
+                    "name": "detail",
+                    "pattern": "detail/{id}",
+                    "target": [
+                        "detail"
+                    ]
+                }
+            ],
+            "targets": {
+                "main": {
+                    "id": "main",
+                    "name": "Main"
+                },
+                "detail": {
+                    "id": "detail",
+                    "name": "Detail"
+                }
+            }
+        }
     }
-  }
 }
