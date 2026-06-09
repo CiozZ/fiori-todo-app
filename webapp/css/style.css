@@ -1,0 +1,14 @@
+.todoItem {
+  padding: 0 0.5rem;
+}
+
+.todoItemDone {
+  padding: 0 0.5rem;
+  text-decoration: line-through;
+  color: #8c8c8c;
+}
+
+.dueDateText {
+  font-size: 0.75rem;
+  color: #6a6a6a;
+}

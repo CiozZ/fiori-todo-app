@@ -1,0 +1,16 @@
+{
+  "name": "fiori-todo-app",
+  "version": "1.0.0",
+  "description": "Fiori To-Do tutorial app",
+  "scripts": {
+    "start": "ui5 serve",
+    "server": "json-server --watch db.json --port 3001",
+    "dev": "concurrently \"npm run start\" \"npm run server\"",
+    "build": "ui5 build"
+  },
+  "devDependencies": {
+    "@ui5/cli": "^4.0.0",
+    "concurrently": "^10.0.3",
+    "json-server": "^0.17.4"
+  }
+}

@@ -1,0 +1,70 @@
+<mvc:View
+  controllerName="todo.controller.Main"
+  xmlns:mvc="sap.ui.core.mvc"
+  xmlns="sap.m"
+  displayBlock="true">
+
+  <Page title="{i18n>appTitle}" showNavButton="false">
+
+    <subHeader>
+      <Bar>
+        <contentMiddle>
+          <SegmentedButton id="filterBtn" selectionChange=".onFilterChange">
+            <items>
+              <SegmentedButtonItem key="all"    text="{i18n>filterAll}" />
+              <SegmentedButtonItem key="active" text="{i18n>filterActive}" />
+              <SegmentedButtonItem key="done"   text="{i18n>filterDone}" />
+            </items>
+          </SegmentedButton>
+        </contentMiddle>
+      </Bar>
+    </subHeader>
+
+    <content>
+      <Toolbar>
+        <Input
+          id="newTodoInput"
+          value="{/newTodo}"
+          placeholder="{i18n>inputPlaceholder}"
+          submit=".onAddTodo"
+          width="55%" />
+        <DatePicker
+          value="{/newDueDate}"
+          valueFormat="yyyy-MM-dd"
+          displayFormat="MMM d, yyyy"
+          placeholder="{i18n>dueDatePlaceholder}"
+          width="11rem" />
+        <Button text="{i18n>addButton}" type="Emphasized" press=".onAddTodo" />
+      </Toolbar>
+
+      <List
+        id="todoList"
+        items="{/todos}"
+        noDataText="{i18n>noItems}"
+        itemPress=".onItemPress">
+        <CustomListItem type="Navigation">
+          <HBox alignItems="Center" width="100%">
+            <CheckBox selected="{done}" select=".onToggleDone" />
+            <VBox>
+              <layoutData><FlexItemData growFactor="1" /></layoutData>
+              <Text text="{title}" class="{= ${done} ? 'todoItemDone' : 'todoItem'}" />
+              <Text
+                text="{path: 'dueDate', formatter: '.formatDate'}"
+                visible="{= !!${dueDate} }"
+                class="sapUiTinyMarginTop dueDateText" />
+            </VBox>
+            <Button icon="sap-icon://delete" type="Transparent" tooltip="{i18n>deleteButton}" press=".onDeleteTodo" />
+          </HBox>
+        </CustomListItem>
+      </List>
+    </content>
+
+    <footer>
+      <Bar>
+        <contentLeft><Text text="{= ${/activeCount} + ' item(s) left'}" /></contentLeft>
+        <contentRight><Button text="{i18n>clearCompleted}" type="Transparent" press=".onClearCompleted" /></contentRight>
+      </Bar>
+    </footer>
+
+  </Page>
+</mvc:View>

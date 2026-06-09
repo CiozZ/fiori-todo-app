@@ -1,0 +1,31 @@
+<mvc:View
+  controllerName="todo.controller.Detail"
+  xmlns:mvc="sap.ui.core.mvc"
+  xmlns="sap.m"
+  displayBlock="true">
+
+  <Page title="{i18n>detailTitle}" showNavButton="true" navButtonPress=".onNavBack">
+    <content>
+      <VBox class="sapUiMediumMargin">
+
+        <ObjectHeader title="{title}" backgroundDesign="Transparent" />
+
+        <VBox class="sapUiSmallMarginTop">
+          <Label text="{i18n>labelDueDate}" />
+          <Text text="{path: 'dueDate', formatter: '.formatDate'}" visible="{= !!${dueDate} }" />
+          <Text text="{i18n>noDueDate}" visible="{= !${dueDate} }" />
+        </VBox>
+
+        <VBox class="sapUiSmallMarginTop">
+          <Label text="{i18n>labelStatus}" />
+          <Switch
+            state="{done}"
+            change=".onToggleDone"
+            customTextOn="{i18n>statusDone}"
+            customTextOff="{i18n>statusActive}" />
+        </VBox>
+
+      </VBox>
+    </content>
+  </Page>
+</mvc:View>
