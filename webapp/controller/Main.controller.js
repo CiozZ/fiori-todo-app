@@ -7,7 +7,7 @@ sap.ui.define([
 ], function (Controller, Filter, FilterOperator, MessageToast, DateFormat) {
   "use strict";
 
-  var API = "http://localhost:3001/todos";
+  var API = "/todos";
 
   return Controller.extend("todo.controller.Main", {
 

@@ -4,7 +4,7 @@ sap.ui.define([
 ], function (UIComponent, JSONModel) {
   "use strict";
 
-  var API = "http://localhost:3001/todos";
+  var API = "/todos";
 
   var DEFAULT_TODOS = [
     { id: 1, title: "Learn Fiori basics",       done: false, dueDate: "2026-06-15" },

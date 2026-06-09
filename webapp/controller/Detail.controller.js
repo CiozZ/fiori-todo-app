@@ -4,7 +4,7 @@ sap.ui.define([
 ], function (Controller, DateFormat) {
   "use strict";
 
-  var API = "http://localhost:3001/todos";
+  var API = "/todos";
 
   return Controller.extend("todo.controller.Detail", {
 

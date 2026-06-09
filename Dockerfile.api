@@ -1,0 +1,10 @@
+FROM node:22-alpine
+RUN npm install -g json-server@0.17.4
+# Keep a copy of the seed data inside the image
+COPY db.json /seed/db.json
+RUN mkdir -p /data
+COPY start-api.sh /start.sh
+RUN chmod +x /start.sh
+EXPOSE 3001
+VOLUME ["/data"]
+CMD ["/start.sh"]
