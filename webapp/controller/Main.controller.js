@@ -3,8 +3,9 @@ sap.ui.define([
   "sap/ui/model/Filter",
   "sap/ui/model/FilterOperator",
   "sap/m/MessageToast",
-  "sap/ui/core/format/DateFormat"
-], function (Controller, Filter, FilterOperator, MessageToast, DateFormat) {
+  "sap/ui/core/format/DateFormat",
+  "sap/m/MessageBox"
+], function (Controller, Filter, FilterOperator, MessageToast, DateFormat, MessageBox) {
   "use strict";
 
   var API = "/todos";
@@ -108,15 +109,31 @@ sap.ui.define([
     onClearCompleted: function () {
       var oModel = this.getView().getModel();
       var aTodos = oModel.getProperty("/todos");
+      var aDone = aTodos.filter(function (t) {return t.done; });
 
-      // Fire a DELETE for each completed todo
-      aTodos.filter(function (t) { return t.done; }).forEach(function (t) {
-        fetch(API + "/" + t.id, { method: "DELETE" });
+      var oBundle = this.getOwnerComponent().getModel("i18n").getResourceBundle();
+
+      if (aDone.length === 0) {
+        MessageToast.show(oBundle.getText("nothingToClear"));
+        return;
+      }
+
+      MessageBox.confirm(oBundle.getText("clearCompletedConfirmText", [aDone.length]), {
+        title: oBundle.getText("clearCompletedConfirmTitle"),
+        onClose: function (sAction) {
+          if (sAction !== MessageBox.Action.OK) {
+            return;   // user cancelled — do nothing
+          }
+
+          aDone.forEach(function (t) {
+            fetch(API + "/" + t.id, { method: "DELETE" });
+          });
+
+          oModel.setProperty("/todos", aTodos.filter(function (t) { return !t.done; }));
+          this._updateActiveCount();
+          this._applyFilter();
+        }.bind(this)
       });
-
-      oModel.setProperty("/todos", aTodos.filter(function (t) { return !t.done; }));
-      this._updateActiveCount();
-      this._applyFilter();
     },
 
     onFilterChange: function () {
