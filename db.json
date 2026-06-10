@@ -19,16 +19,22 @@
       "dueDate": ""
     },
     {
-      "title": "JSON Server",
+      "title": "New task",
       "done": false,
       "dueDate": "",
       "id": 4
     },
     {
-      "title": "STFU",
+      "title": "New Task FTW",
       "done": false,
-      "dueDate": "",
+      "dueDate": "2026-06-30",
       "id": 5
+    },
+    {
+      "title": "Good",
+      "done": false,
+      "dueDate": "2026-06-01",
+      "id": 6
     }
   ]
 }
