@@ -1,4 +1,4 @@
-# Fiori To-Do App
+# Run your Fiori To-Do App directly on your Synology NAS via Docker
 
 A tutorial SAP Fiori application built with OpenUI5. Covers the core Fiori development patterns: MVC, XML views, data binding, routing, and REST API integration.
 
