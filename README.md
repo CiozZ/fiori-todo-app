@@ -2,6 +2,8 @@
 
 A tutorial SAP Fiori application built with OpenUI5. Covers the core Fiori development patterns: MVC, XML views, data binding, routing, and REST API integration.
 
+> **Full tutorial:** [tutorial.md](tutorial.md) — a step-by-step blog post covering everything from blank folder to running on a Synology NAS via Docker.
+
 ## Features
 
 - Add, complete, and delete tasks
@@ -74,6 +76,22 @@ json-server exposes a standard REST API on port 3001:
 | DELETE | `/todos/:id` | Delete a task |
 
 Changes are written back to `db.json` automatically.
+
+## Docker (Synology)
+
+Two images: `fiori-todo-app` (nginx serving the built app) and `fiori-todo-api` (json-server). nginx proxies `/todos` to the API container internally — only port 8080 is exposed.
+
+```bash
+# Build and export images for Synology
+docker build -t fiori-todo-app:latest -f Dockerfile .
+docker build -t fiori-todo-api:latest -f Dockerfile.api .
+docker save fiori-todo-app:latest | gzip > fiori-todo-app.tar.gz
+docker save fiori-todo-api:latest | gzip > fiori-todo-api.tar.gz
+```
+
+Import both `.tar.gz` files in **Container Manager → Image → Add → Import from file**, then deploy using `docker-compose.synology.yml`.
+
+See [tutorial.md](tutorial.md) for the full walkthrough.
 
 ## Key concepts covered
 
