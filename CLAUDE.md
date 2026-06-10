@@ -51,3 +51,20 @@ The app follows the standard SAP Fiori MVC pattern via OpenUI5 (version pinned t
 **Docker:** Two images. `Dockerfile` is multi-stage — Node.js builds via `ui5 build -a` (bundles all UI5 framework files into `dist/`), nginx serves the result. `Dockerfile.api` runs json-server; `start-api.sh` seeds `/data/db.json` from the image's copy on first run. `docker-compose.synology.yml` references pre-imported images by name (no build context) for use in Synology Container Manager. In compose, only the app container is exposed (host 8080 → nginx 80); the API is reachable solely through the nginx proxy, and `db.json` lives in the `todo-data` volume.
 
 **Docs:** `tutorial.md` is a long-form step-by-step walkthrough of building this exact app. When changing code or commands that the tutorial or README quote, update them too.
+
+## Learning roadmap (tutor mode)
+
+The user is learning UI5/Fiori and implements features **themselves**; Claude acts as tutor — explain concepts, point to files/lines, set verification checks, and review the result like a PR. Don't write the feature for them (whitespace/cleanup fixes during review are fine). Update the statuses below as features land.
+
+1. ✅ **Confirm before destructive actions** — `sap.m.MessageBox`, async `onClose` callback, closures vs `.bind(this)`. Done in commit `fba0b44`.
+2. ✅ **Full i18n usage** — `_getText` helper in `Main.controller.js`, footer via composite binding + `sap/base/strings/formatMessage`, `i18n_de.properties` with `supportedLocales: ["", "de"]`; test with `?sap-ui-language=de`.
+3. ⬜ **Search field** — `sap.m.SearchField`, combining `Filter`s with `and: true` in `_applyFilter()`.
+4. ⬜ **Overdue highlighting** — `ObjectStatus`, multi-part formatter (`parts: ['dueDate', 'done']`) returning a `ValueState`.
+5. ⬜ **Edit todo title on Detail page** — explicit save vs two-way binding; copy in a local view model.
+6. ⬜ **Named view model for UI state** — `{ busy, editMode }` as `view` model; separate UI state from data.
+7. ⬜ **Error handling + busy states** — roll back optimistic updates on fetch failure; `busyIndicatorDelay`.
+8. ⬜ **Sorting/grouping** — `ViewSettingsDialog` in an XML fragment, `sap.ui.model.Sorter` with group function.
+9. ⬜ **Not-found handling + deep links** — NotFound target; fix the race where deep-linking `#/detail/{id}` before the initial fetch resolves bounces to main (expose the fetch as a Promise on the Component).
+10. ⬜ **Tests** — QUnit for `formatDate` (extract shared `model/formatter.js` first), one OPA5 journey.
+11. ⬜ **OData V4 migration** — replace json-server + manual `fetch` with `ODataModel` bindings.
+12. ⬜ **Flexible Column Layout** — `sap.f.FlexibleColumnLayout`, layout-aware routing.

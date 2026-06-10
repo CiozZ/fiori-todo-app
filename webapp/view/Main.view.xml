@@ -61,7 +61,15 @@
 
     <footer>
       <Bar>
-        <contentLeft><Text text="{= ${/activeCount} + ' item(s) left'}" /></contentLeft>
+        <contentLeft>
+          <Text text="{
+            parts: [
+              { path: 'i18n>itemsLeft' },
+              { path: '/activeCount' }
+            ],
+            formatter: '.formatMessage'
+          }" />
+        </contentLeft>
         <contentRight><Button text="{i18n>clearCompleted}" type="Transparent" press=".onClearCompleted" /></contentRight>
       </Bar>
     </footer>

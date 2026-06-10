@@ -40,7 +40,7 @@
                 "type": "sap.ui.model.resource.ResourceModel",
                 "settings": {
                     "bundleName": "todo.i18n.i18n",
-                    "supportedLocales": [""],
+                    "supportedLocales": ["", "de"],
                     "fallbackLocale": ""
                 }
             }

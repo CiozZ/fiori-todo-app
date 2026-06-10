@@ -4,8 +4,9 @@ sap.ui.define([
   "sap/ui/model/FilterOperator",
   "sap/m/MessageToast",
   "sap/ui/core/format/DateFormat",
-  "sap/m/MessageBox"
-], function (Controller, Filter, FilterOperator, MessageToast, DateFormat, MessageBox) {
+  "sap/m/MessageBox",
+  "sap/base/strings/formatMessage"
+], function (Controller, Filter, FilterOperator, MessageToast, DateFormat, MessageBox, formatMessage) {
   "use strict";
 
   var API = "/todos";
@@ -13,6 +14,9 @@ sap.ui.define([
   return Controller.extend("todo.controller.Main", {
 
     // ── Formatter ────────────────────────────────────────────────────────────
+
+    // Used by composite bindings: first part is the message pattern, the rest fill {0}, {1}, ...
+    formatMessage: formatMessage,
 
     formatDate: function (sValue) {
       if (!sValue) return "";
@@ -40,12 +44,16 @@ sap.ui.define([
       oBinding.filter(aFilters);
     },
 
+    _getText: function (sKey, aArgs){
+      return this.getOwnerComponent().getModel("i18n").getResourceBundle().getText(sKey, aArgs);
+    },
+
     // ── Event handlers ────────────────────────────────────────────────────────
 
     onAddTodo: function () {
       var oModel = this.getView().getModel();
       var sTitle = oModel.getProperty("/newTodo").trim();
-      if (!sTitle) { MessageToast.show("Please enter a task first."); return; }
+      if (!sTitle) { MessageToast.show(this._getText("enterTaskFirst")); return; }
 
       var oNewTodo = {
         title: sTitle,
@@ -70,8 +78,8 @@ sap.ui.define([
         this._applyFilter();
       }.bind(this))
       .catch(function () {
-        MessageToast.show("Could not save — is the API server running?");
-      });
+        MessageToast.show(this._getText("couldNotSave"));
+      }.bind(this));
     },
 
     // Two-way binding already updated the model before this fires.
@@ -111,15 +119,13 @@ sap.ui.define([
       var aTodos = oModel.getProperty("/todos");
       var aDone = aTodos.filter(function (t) {return t.done; });
 
-      var oBundle = this.getOwnerComponent().getModel("i18n").getResourceBundle();
-
       if (aDone.length === 0) {
-        MessageToast.show(oBundle.getText("nothingToClear"));
+        MessageToast.show(this._getText("nothingToClear"));
         return;
       }
 
-      MessageBox.confirm(oBundle.getText("clearCompletedConfirmText", [aDone.length]), {
-        title: oBundle.getText("clearCompletedConfirmTitle"),
+      MessageBox.confirm(this._getText("clearCompletedConfirmText", [aDone.length]), {
+        title: this._getText("clearCompletedConfirmTitle"),
         onClose: function (sAction) {
           if (sAction !== MessageBox.Action.OK) {
             return;   // user cancelled — do nothing
